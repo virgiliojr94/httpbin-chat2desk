@@ -1,0 +1,29 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and test
+        run: |
+          # Comandos para compilar o código-fonte e executar os testes
+
+      - name: Build and push container image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: httpbin-chat2desk-v1.0
+
+      - name: Deploy to Kubernetes
+        run: |
+          # Comandos para atualizar o deployment no cluster Kubernetes

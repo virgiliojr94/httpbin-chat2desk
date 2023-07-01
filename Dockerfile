@@ -8,7 +8,8 @@ LABEL org.kennethreitz.vendor="Kenneth Reitz"
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
-RUN apt update -y && apt install python3-pip git -y && pip3 install --no-cache-dir pipenv
+RUN apt-get update -y && apt-get install -y python3-pip git
+RUN pip3 install --no-cache-dir pipenv
 
 ADD Pipfile Pipfile.lock /httpbin/
 WORKDIR /httpbin
@@ -16,6 +17,7 @@ RUN /bin/bash -c "pip3 install --no-cache-dir -r <(pipenv lock -r)"
 
 ADD . /httpbin
 RUN pip3 install --no-cache-dir /httpbin
+RUN pip3 install --no-cache-dir gunicorn
 
 EXPOSE 80
 

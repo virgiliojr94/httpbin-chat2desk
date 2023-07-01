@@ -80,13 +80,15 @@ def jsonify(*args, **kwargs):
 BaseResponse.autocorrect_location_header = False
 
 # Find the correct template folder when running from a different location
-tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "templates")
+tmpl_dir = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "templates")
 
 app = Flask(__name__, template_folder=tmpl_dir)
 app.debug = bool(os.environ.get("DEBUG"))
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
-app.add_template_global("HTTPBIN_TRACKING" in os.environ, name="tracking_enabled")
+app.add_template_global("HTTPBIN_TRACKING" in os.environ,
+                        name="tracking_enabled")
 
 app.config["SWAGGER"] = {"title": "httpbin.org", "uiversion": 3}
 
@@ -95,7 +97,7 @@ template = {
     "info": {
         "title": "httpbin.org",
         "description": (
-            "A simple HTTP Request & Response Service."
+            "Mudando para testar o CI CD"
             "<br/> <br/> <b>Run locally: </b> <code>$ docker run -p 80:80 kennethreitz/httpbin</code>"
         ),
         "contact": {
@@ -158,7 +160,8 @@ swagger_config = {
     "specs_route": "/",
 }
 
-swagger = Swagger(app, sanitizer=NO_SANITIZER, template=template, config=swagger_config)
+swagger = Swagger(app, sanitizer=NO_SANITIZER,
+                  template=template, config=swagger_config)
 
 # Set up Bugsnag exception tracking, if desired. To use Bugsnag, install the
 # Bugsnag Python client with the command "pip install bugsnag", and set the
@@ -215,7 +218,8 @@ def before_request():
 
 @app.after_request
 def set_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = request.headers.get("Origin", "*")
+    response.headers["Access-Control-Allow-Origin"] = request.headers.get(
+        "Origin", "*")
     response.headers["Access-Control-Allow-Credentials"] = "true"
 
     if request.method == "OPTIONS":
@@ -425,7 +429,8 @@ def view_post():
     """
 
     return jsonify(
-        get_dict("url", "args", "form", "data", "origin", "headers", "files", "json")
+        get_dict("url", "args", "form", "data",
+                 "origin", "headers", "files", "json")
     )
 
 
@@ -443,7 +448,8 @@ def view_put():
     """
 
     return jsonify(
-        get_dict("url", "args", "form", "data", "origin", "headers", "files", "json")
+        get_dict("url", "args", "form", "data",
+                 "origin", "headers", "files", "json")
     )
 
 
@@ -461,7 +467,8 @@ def view_patch():
     """
 
     return jsonify(
-        get_dict("url", "args", "form", "data", "origin", "headers", "files", "json")
+        get_dict("url", "args", "form", "data",
+                 "origin", "headers", "files", "json")
     )
 
 
@@ -479,7 +486,8 @@ def view_delete():
     """
 
     return jsonify(
-        get_dict("url", "args", "form", "data", "origin", "headers", "files", "json")
+        get_dict("url", "args", "form", "data",
+                 "origin", "headers", "files", "json")
     )
 
 
@@ -565,7 +573,8 @@ def redirect_n_times(n):
 
 def _redirect(kind, n, external):
     return redirect(
-        url_for("{0}_redirect_n_times".format(kind), n=n - 1, _external=external)
+        url_for("{0}_redirect_n_times".format(
+            kind), n=n - 1, _external=external)
     )
 
 
@@ -670,7 +679,8 @@ def relative_redirect_n_times(n):
         response.headers["Location"] = url_for("view_get")
         return response
 
-    response.headers["Location"] = url_for("relative_redirect_n_times", n=n - 1)
+    response.headers["Location"] = url_for(
+        "relative_redirect_n_times", n=n - 1)
     return response
 
 
@@ -1256,7 +1266,8 @@ def drip():
     """
     args = CaseInsensitiveDict(request.args.items())
     duration = float(args.get("duration", 2))
-    numbytes = min(int(args.get("numbytes", 10)), (10 * 1024 * 1024))  # set 10MB limit
+    numbytes = min(int(args.get("numbytes", 10)),
+                   (10 * 1024 * 1024))  # set 10MB limit
     code = int(args.get("code", 200))
 
     if numbytes <= 0:
@@ -1364,7 +1375,8 @@ def etag(etag):
         description: match
 
     """
-    if_none_match = parse_multi_value_header(request.headers.get("If-None-Match"))
+    if_none_match = parse_multi_value_header(
+        request.headers.get("If-None-Match"))
     if_match = parse_multi_value_header(request.headers.get("If-Match"))
 
     if if_none_match:
@@ -1529,7 +1541,8 @@ def range_request(numbytes):
     pause_per_byte = duration / numbytes
 
     request_headers = get_headers()
-    first_byte_pos, last_byte_pos = get_request_range(request_headers, numbytes)
+    first_byte_pos, last_byte_pos = get_request_range(
+        request_headers, numbytes)
     range_length = (last_byte_pos + 1) - first_byte_pos
 
     if (
@@ -1565,7 +1578,8 @@ def range_request(numbytes):
             time.sleep(pause_per_byte * len(chunks))
             yield (bytes(chunks))
 
-    content_range = "bytes %d-%d/%d" % (first_byte_pos, last_byte_pos, numbytes)
+    content_range = "bytes %d-%d/%d" % (first_byte_pos,
+                                        last_byte_pos, numbytes)
     response_headers = {
         "Content-Type": "application/octet-stream",
         "ETag": "range%d" % numbytes,
@@ -1726,7 +1740,7 @@ def image_svg():
 def resource(filename):
     path = os.path.join(tmpl_dir, filename)
     with open(path, "rb") as f:
-      return f.read()
+        return f.read()
 
 
 @app.route("/xml")
