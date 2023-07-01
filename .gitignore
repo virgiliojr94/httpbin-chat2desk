@@ -9,3 +9,7 @@ dist/
 *.egg-info
 *.swp
 .vscode/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform/
