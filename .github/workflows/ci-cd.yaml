@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD
 
 on:
   push:
@@ -6,24 +6,36 @@ on:
       - master
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Build and test
-        run: |
-          # Comandos para compilar o código-fonte e executar os testes
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Build and push container image
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: httpbin-chat2desk-v1.0
+          tags: virgiliojr/httpbin-chat2desk:latest
 
       - name: Deploy to Kubernetes
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Apply Kubernetes manifests
         run: |
-          # Comandos para atualizar o deployment no cluster Kubernetes
+          kubectl apply -f deployment.yaml
+          kubectl apply -f service.yaml
