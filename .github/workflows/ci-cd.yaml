@@ -29,13 +29,14 @@ jobs:
           push: true
           tags: virgiliojr/httpbin-chat2desk:latest
 
-      - name: Deploy to Kubernetes
-        uses: azure/k8s-set-context@v1
+      - name: Azure Login
+        uses: Azure/login@v1.4.6
         with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-
-      - name: Apply Kubernetes manifests
-        run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+          creds: ${{ secrets.AZURE_CREDENTIAL }}
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v4.9
+        with:
+        # Path to the manifest files which will be used for deployment.
+          manifests: deployment.yaml,service.yaml
+      
