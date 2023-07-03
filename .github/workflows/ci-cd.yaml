@@ -73,6 +73,6 @@ jobs:
         name: Deploys application
         with:
           action: deploy
-          images: ${{secrets.DOCKER_LOGIN}}/httpbin-chat2desk_httpbin:latest
+          images: virgiliojr/httpbin-chat2desk_httpbin:latest
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           imagepullsecrets: docker-image-pull-secret
