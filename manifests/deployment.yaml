@@ -7,8 +7,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-       maxSurge: 1
-       maxUnavailable: 0   
+      maxSurge: 1
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: httpbin
@@ -19,6 +19,25 @@ spec:
     spec:
       containers:
         - name: httpbin
-          image: virgiliojr/httpbin-chat2desk_httpbin
+          image: virgiliojr/httpbin-chat2desk_httpbin:latest
           ports:
             - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 15
