@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: httpbin
-          image: virgiliojr/httpbin-chat2desk
+          image: virgiliojr/httpbin-chat2desk_httpbin
           ports:
             - containerPort: 80
