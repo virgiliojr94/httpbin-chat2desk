@@ -6,20 +6,26 @@ on:
 jobs:
   test-docker-image:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
       - name: Build Docker image
-        run: |
-          docker build -t my-flask-app:${{ github.sha }} .
-          docker images
-
-      - name: Run Docker container
+        run: docker build -t my-flask-app:${{ github.sha }} .
+      - name: Test Docker image
         run: |
           docker run -d --name my-flask-app my-flask-app:${{ github.sha }}
           sleep 5
           curl http://localhost:5000/
-          sleep 5
-          docker stop my-flask-app && docker rm my-flask-app
+          docker logs my-flask-app
+      - name: Check if app is running correctly
+        run: |
+          if [ $(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/) == "200" ]
+          then
+            echo "Application is running correctly"
+            docker stop my-flask-app
+            exit 0
+          else
+            echo "Application is not running correctly"
+            docker stop my-flask-app
+            exit 1
+          fi
