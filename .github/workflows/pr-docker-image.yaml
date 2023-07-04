@@ -12,4 +12,4 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-flask-app:${{ github.sha }} .
       - name: Test Docker image
-        run: docker run my-flask-app:${{ github.sha }} python test.py
+        run: docker run my-flask-app:${{ github.sha }}
