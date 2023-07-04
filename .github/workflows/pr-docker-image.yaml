@@ -12,6 +12,8 @@ jobs:
       - name: Build Docker image
         run: docker build -t my-flask-app:${{ github.sha }} .
       - name: Test Docker image
+        run: docker run my-flask-app:${{ github.sha }}
+      - name: Test Docker image
         run: |
           docker run -d --name my-flask-app my-flask-app:${{ github.sha }}
           sleep 5
