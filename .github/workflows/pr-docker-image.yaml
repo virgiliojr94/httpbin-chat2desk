@@ -13,9 +13,7 @@ jobs:
         run: docker build -t my-flask-app:${{ github.sha }} .
       - name: Test Docker image
         run: docker run my-flask-app:${{ github.sha }}
-      - name: Test Docker image
-        run: |
-          docker run -d --name my-flask-app my-flask-app:${{ github.sha }}
-          sleep 5
-          curl http://localhost:5000/
-          exit
+      - name: Test Docker Image
+      # You may pin to the exact commit or the version.
+      # uses: jina-ai/action-hubble-test-docker@711374770bc94ef16ca6c2c39af30142d9b864c2
+        uses: jina-ai/action-hubble-test-docker@v6
