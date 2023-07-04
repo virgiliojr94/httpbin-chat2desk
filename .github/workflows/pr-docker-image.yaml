@@ -37,8 +37,7 @@ jobs:
       -
         name: Test
         run: |
-          docker run --rm ${{ env.TEST_TAG }}
+          docker run -d ${{ env.TEST_TAG }}
           curl http://localhost:5000/
-          docker logs ${{ env.TEST_TAG }}
           docker stop ${{ env.TEST_TAG }}
           exit 0
