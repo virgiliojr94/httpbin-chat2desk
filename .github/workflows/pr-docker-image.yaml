@@ -1,0 +1,15 @@
+name: Test Docker Image
+
+on:
+  pull_request:
+
+jobs:
+  test-docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build -t my-flask-app:${{ github.sha }} .
+      - name: Test Docker image
+        run: docker run my-flask-app:${{ github.sha }} python test.py
