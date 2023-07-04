@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: httpbin
-          image: virgiliojr/httpbin-chat2desk_httpbin:latest
+          image: kennethreitz/httpbin:latest
           ports:
             - containerPort: 80
           resources:
