@@ -39,9 +39,3 @@ jobs:
         run: |
           docker run -d ${{ env.TEST_TAG }}
 
-      -
-        name: Log and Stop
-        run: |
-          docker logs ${{ env.TEST_TAG }}
-          docker stop ${{ env.TEST_TAG }}
-
