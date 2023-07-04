@@ -38,3 +38,7 @@ jobs:
         name: Test
         run: |
           docker run --rm ${{ env.TEST_TAG }}
+          curl http://localhost:5000/
+          docker logs my-flask-app
+          docker stop my-flask-app
+          exit 0
