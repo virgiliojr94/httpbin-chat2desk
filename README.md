@@ -1,31 +1,17 @@
-# httpbin(1): HTTP Request & Response Service
+## DESAFIO:
 
+### Implantar Cluster Kubernetes
 
-A [Kenneth Reitz](http://kennethreitz.org/bitcoin) Project.
+Implementar Protótipo no ambiente criado
 
-![ice cream](http://farm1.staticflickr.com/572/32514669683_4daf2ab7bc_k_d.jpg)
+### REQUISITOS:
 
-Run locally:
-```sh
-docker pull kennethreitz/httpbin
-docker run -p 80:80 kennethreitz/httpbin
-```
+1- O Cluster Kubernetes deve ser provisionado através do processo Infrastructure as Code (IaC)
 
-See http://httpbin.org for more information.
+2- Para as ferramentas IaC devem ser utilizados Terraform e/ou Ansible
 
-## Officially Deployed at:
+3- O provisionamento do Cluster pode ser realizado em qualquer plataforma Cloud (AWS, GCP, Linode, Azure...)
 
-- http://httpbin.org
-- https://httpbin.org
-- https://hub.docker.com/r/kennethreitz/httpbin/
+4- O protótipo deve ser implementado por meio das práticas de Continuous Integration e Continuous Deployment (CI/CD)
 
-
-## SEE ALSO
-
-- http://requestb.in
-- http://python-requests.org
-- https://grpcb.in/
-
-## Build Status
-
-[![Build Status](https://travis-ci.org/requests/httpbin.svg?branch=master)](https://travis-ci.org/requests/httpbin)
+5- O protótipo pode ser desenvolvido com o minimo de recursos necessários, ou até mesmo realizar um Fork de um repositório já existente, públicos de qualquer autor.

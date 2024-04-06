@@ -35,7 +35,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: virgiliojr/httpbin-chat2desk_httpbin:latest
+          tags: virgiliojr/app-simples:latest
 
   Azure:
     permissions:
@@ -73,6 +73,6 @@ jobs:
         name: Deploys application
         with:
           action: deploy
-          images: virgiliojr/httpbin-chat2desk_httpbin:latest
+          images: virgiliojr/app-simples:latest
           manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
           imagepullsecrets: docker-image-pull-secret

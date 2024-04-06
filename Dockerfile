@@ -1,22 +1,13 @@
-FROM ubuntu:18.04
+FROM python:3.7-alpine
 
-LABEL name="httpbin"
-LABEL version="0.9.2"
-LABEL description="A simple HTTP service."
-LABEL org.kennethreitz.vendor="Kenneth Reitz"
+WORKDIR /app
 
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
+COPY requirements.txt .
 
-RUN apt update -y && apt install python3-pip git -y && pip3 install --no-cache-dir pipenv gevent
+RUN pip install --no-cache-dir -r requirements.txt
 
-ADD Pipfile Pipfile.lock /httpbin/
-WORKDIR /httpbin
-RUN /bin/bash -c "pip3 install --no-cache-dir -r <(pipenv lock -r)"
+COPY . .
 
-ADD . /httpbin
-RUN pip3 install --no-cache-dir /httpbin
+EXPOSE 5000
 
-EXPOSE 80
-
-CMD ["gunicorn", "-b", "0.0.0.0:80", "httpbin:app", "-k", "gevent"]
+CMD ["python", "app-simples.py"]
